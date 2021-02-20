@@ -1,18 +1,18 @@
-var express = require("express"),
+var express = require('express'),
   router = express.Router();
 
-var db = require("./database");
-const jwt = require("jsonwebtoken");
-var _ = require("lodash");
-var config = require("./config.json");
+var db = require('./database');
+const jwt = require('jsonwebtoken');
+var _ = require('lodash');
+var config = require('./config.json');
 
-const errorMsg = "username or password has wrong.";
+const errorMsg = 'username or password has wrong.';
 
-router.post("/auth", (req, res) => {
+router.post('/', (req, res) => {
   const request = req.body || {};
-  const username = request.username || "";
-  const password = request.password || "";
-  if (username === "" || password === "") {
+  const username = request.username || '';
+  const password = request.password || '';
+  if (username === '' || password === '') {
     res.status(401).json({ error: errorMsg });
     return;
   }

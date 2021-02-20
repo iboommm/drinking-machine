@@ -6,28 +6,35 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start-server": "./node_modules/.bin/pm2 flush && ./node_modules/.bin/pm2 kill && ./node_modules/.bin/pm2 start Api/index.js --name drinkingAdminAPI --watch --ignore-watch 'node_modules'",
-    "dev": "yarn start-server && yarn serve"
+    "dev": "yarn start-server && yarn serve",
+    "start-server": "./node_modules/.bin/pm2 flush && ./node_modules/.bin/pm2 kill && ./node_modules/.bin/pm2 start Api/index.js --name drinkingAdminAPI --watch --ignore-watch 'node_modules'"
   },
   "dependencies": {
     "@popperjs/core": "^2.8.2",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.0.0-beta2",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
     "global": "^4.4.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "md5": "^2.3.0",
+    "node-sass": "^5.0.0",
     "pm2": "^4.5.4",
+    "sass-loader": "^11.0.1",
     "sqlite3": "^5.0.2",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-localstorage": "^0.6.2",
+    "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
