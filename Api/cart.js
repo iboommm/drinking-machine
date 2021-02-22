@@ -72,13 +72,16 @@ router.put('/:table', authenticateJWT, (req, res) => {
 
 router.post('/:table', authenticateJWT, (req, res) => {
   let values_sql = '';
-  const columns = _.keys(req.body);
   _.each(req.body, (data, key) => {
-    if (!_.includes(['id', 'msg', 'valid'], key))
-      values_sql += `${key} = '${data}' `;
+    if (!_.includes(['id'], key)) values_sql += ` ${key} = '${data}' ,`;
   });
-  
-  const sql = ` UPDATE ${req.params.table} SET ${values_sql} WHERE id = ${req.body.id}`;
+  values_sql = values_sql
+    .split(' ')
+    .reverse()
+    .slice(1)
+    .reverse()
+    .join(' ');
+  const sql = ` UPDATE ${req.params.table} SET${values_sql} WHERE id = ${req.body.id}`;
   const params = [];
   db.all(sql, params, (err, result) => {
     if (err) {
@@ -86,7 +89,7 @@ router.post('/:table', authenticateJWT, (req, res) => {
       return;
     }
     res.json({
-      result: true
+      result: true,
     });
   });
 });
@@ -100,7 +103,7 @@ router.delete('/:table/:id', authenticateJWT, (req, res) => {
       return;
     }
     res.json({
-      result,
+      result: true,
     });
   });
 });

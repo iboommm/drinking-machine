@@ -12,13 +12,27 @@
         :fixed="fixed"
         :items="items"
         :fields="fields"
+        itemsPerPageSelect
         :items-per-page="small ? 10 : 5"
         :dark="dark"
         pagination
+        tableFilter
+        sorter
       >
-        <template #status="{ item }">
+        <template #edit="{ item }">
           <td>
-            <CBadge :color="getBadge(item.status)">{{ item.status }}</CBadge>
+            <button
+              class="btn btn-sm btn-primary mr-1"
+              @click="editAction(item)"
+            >
+              Edit
+            </button>
+            <button v-if="canDeleteItem"
+              class="btn btn-sm btn-danger"
+              @click="deleteAction(item.id)"
+            >
+              Delete
+            </button>
           </td>
         </template>
       </CDataTable>
@@ -28,18 +42,18 @@
 
 <script>
 export default {
-  name: "Table",
+  name: 'Table',
   props: {
     items: Array,
     fields: {
       type: Array,
       default() {
-        return ["username", "registered", "role", "status"];
+        return ['username', 'registered', 'role', 'status'];
       },
     },
     caption: {
       type: String,
-      default: "Table",
+      default: 'Table',
     },
     hover: Boolean,
     striped: Boolean,
@@ -47,18 +61,24 @@ export default {
     small: Boolean,
     fixed: Boolean,
     dark: Boolean,
+    editAction: Function,
+    deleteAction: Function,
+    canDeleteItem: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     getBadge(status) {
-      return status === "Active"
-        ? "success"
-        : status === "Inactive"
-        ? "secondary"
-        : status === "Pending"
-        ? "warning"
-        : status === "Banned"
-        ? "danger"
-        : "primary";
+      return status === 'Active'
+        ? 'success'
+        : status === 'Inactive'
+        ? 'secondary'
+        : status === 'Pending'
+        ? 'warning'
+        : status === 'Banned'
+        ? 'danger'
+        : 'primary';
     },
   },
 };

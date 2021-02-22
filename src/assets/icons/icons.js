@@ -20,17 +20,10 @@ import {
   cibCcVisa,
   cibStripe,
   cibPaypal,
-  cibGooglePay, 
-  cibCcAmex
-} from '@coreui/icons'
-import {
-  cifUs,
-  cifBr,
-  cifIn,
-  cifFr,
-  cifEs,
-  cifPl
-} from '@coreui/icons'
+  cibGooglePay,
+  cibCcAmex,
+} from '@coreui/icons';
+import { cifUs, cifBr, cifIn, cifFr, cifEs, cifPl } from '@coreui/icons';
 import {
   cilArrowRight,
   cilBan,
@@ -76,15 +69,20 @@ import {
   cilUser,
   cilUserFemale,
   cilUserFollow,
-  cilXCircle
-
-} from '@coreui/icons'
-import { logo } from './logo'
+  cilXCircle,
+  cilTags,
+  cilMobile,
+  cilSpreadsheet,
+} from '@coreui/icons';
+import { logo } from './logo';
 
 export const iconsSet = Object.assign(
   {},
   { logo },
   {
+    cilSpreadsheet,
+    cilMobile,
+    cilTags,
     cilArrowRight,
     cilBan,
     cilBasket,
@@ -129,7 +127,7 @@ export const iconsSet = Object.assign(
     cilUser,
     cilUserFemale,
     cilUserFollow,
-    cilXCircle
+    cilXCircle,
   },
   {
     cifUs,
@@ -137,7 +135,7 @@ export const iconsSet = Object.assign(
     cifIn,
     cifFr,
     cifEs,
-    cifPl
+    cifPl,
   },
   {
     cibFacebook,
@@ -157,11 +155,11 @@ export const iconsSet = Object.assign(
     cibBehance,
     cibReddit,
     cibVimeo,
-    cibCcMastercard, 
-    cibCcVisa, 
-    cibStripe, 
-    cibPaypal, 
+    cibCcMastercard,
+    cibCcVisa,
+    cibStripe,
+    cibPaypal,
     cibGooglePay,
-    cibCcAmex
+    cibCcAmex,
   }
-)
+);

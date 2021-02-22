@@ -7,28 +7,38 @@
             <CCard class="p-4">
               <CCardBody>
                 <CForm>
+                  <CAlert v-if="result.msg" :color="!result.valid ? 'warning':'success'" closeButton>
+                    {{ result.msg }}
+                  </CAlert>
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>
                   <CInput
                     placeholder="Username"
-                    autocomplete="username email"
+                    autocomplete="username"
+                    v-model="username"
                   >
-                    <template #prepend-content><CIcon name="cil-user"/></template>
+                    <template #prepend-content
+                      ><CIcon name="cil-user"
+                    /></template>
                   </CInput>
                   <CInput
                     placeholder="Password"
                     type="password"
                     autocomplete="curent-password"
+                    v-model="password"
                   >
-                    <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                    <template #prepend-content
+                      ><CIcon name="cil-lock-locked"
+                    /></template>
                   </CInput>
                   <CRow>
                     <CCol col="6" class="text-left">
-                      <CButton color="primary" class="px-4">Login</CButton>
-                    </CCol>
-                    <CCol col="6" class="text-right">
-                      <CButton color="link" class="px-0">Forgot password?</CButton>
-                      <CButton color="link" class="d-lg-none">Register now!</CButton>
+                      <CButton
+                        @click="onClickSubmit"
+                        color="primary"
+                        class="px-4"
+                        >Login</CButton
+                      >
                     </CCol>
                   </CRow>
                 </CForm>
@@ -41,14 +51,8 @@
               body-wrapper
             >
               <CCardBody>
-                <h2>Sign up</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <CButton
-                  color="light"
-                  variant="outline"
-                  size="lg"
-                >
-                  Register Now!
+                <CButton color="light" variant="outline" size="lg">
+                  Drinking Machine
                 </CButton>
               </CCardBody>
             </CCard>
@@ -60,7 +64,25 @@
 </template>
 
 <script>
+import { ActionSignIn } from "../../storage/auth";
+
 export default {
-  name: 'Login'
-}
+  name: "Login",
+  data() {
+    return {
+      username: "",
+      password: "",
+      result: {}
+    };
+  },
+  methods: {
+    async onClickSubmit() {
+      this.result = await ActionSignIn(this.username, this.password);
+      console.log(this.result.valid);
+      if (this.result.valid) {
+        location.reload();
+      }
+    },
+  },
+};
 </script>
