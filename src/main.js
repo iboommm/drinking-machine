@@ -1,10 +1,23 @@
-import { createApp } from 'vue';
-import App from './App.vue';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/stylesheets/style.css';
-import router from './router';
+import 'core-js/stable'
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+import CoreuiVue from '@coreui/vue'
+import { iconsSet as icons } from './assets/icons/icons.js'
+import store from './store'
+import '@babel/polyfill'
 
-createApp(App)
-  .use(router)
-  .mount('#app');
+Vue.config.performance = true
+Vue.use(CoreuiVue)
+Vue.prototype.$log = console.log.bind(console)
+
+new Vue({
+  el: '#app',
+  router,
+  store,
+  icons,
+  template: '<App/>',
+  components: {
+    App
+  }
+})
