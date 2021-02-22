@@ -24,6 +24,7 @@ function useLoginForm(props) {
         .then((res) => {
           localStorage.setItem('isAuthenticated', true);
           localStorage.setItem('username', loginFrom.username);
+          localStorage.setItem('role', loginFrom.role);
           localStorage.setItem('user-token', res.data.accessToken);
           loginFrom.msg = 'Login completed, redirect in 3 sec.';
           loginFrom.valid = true;

@@ -20,10 +20,19 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: () => import('../views/HomePage.vue'),
+    component: () => import('../views/Admin/HomePage.vue'),
     meta: {
       requiresAuth: true,
       title: 'Dashboard',
+    },
+  },
+  {
+    path: '/sign-out',
+    name: 'Sign out',
+    component: () => import('../views/SignOutPage.vue'),
+    meta: {
+      requiresAuth: true,
+      title: 'Sign out',
     },
   },
   {

@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: 'AdminNavbar',
   setup() {},
   data() {
     return {
