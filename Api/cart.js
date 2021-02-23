@@ -54,14 +54,19 @@ router.get('/:table/:id', authenticateJWT, (req, res) => {
 });
 
 router.put('/:table', authenticateJWT, (req, res) => {
+  let column = '';
+  _.each(req.body, (data, key) => {
+    if (!_.includes(['id'], key)) column += `${key},`;
+  });
+  column = _.compact(column.split(',')).join(',');
   const data = _.values(req.body)
     .map((x) => `"${x}"`)
     .join(',');
-  const sql = `insert into ${req.params.table} values (NULL, ${data})`;
+  const sql = `insert into ${req.params.table} (id,${column}) values (NULL, ${data})`;
   const params = [];
   db.all(sql, params, (err, result) => {
     if (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json({ error: err.message, sql });
       return;
     }
     res.json({

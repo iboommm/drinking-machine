@@ -27,12 +27,23 @@
             >
               Edit
             </button>
-            <button v-if="canDeleteItem"
+            <button
+              v-if="canDeleteItem"
               class="btn btn-sm btn-danger"
               @click="deleteAction(item.id)"
             >
               Delete
             </button>
+          </td>
+        </template>
+        <template #image="{ item }">
+          <td>
+            <img style="max-width: 200px" class="img-thumbnail img-fluid" :src="'http://localhost:5000' + item.image" alt="">
+          </td>
+        </template>
+        <template #category="{ item }">
+          <td>
+            {{ getCategoryName(item.category) }}
           </td>
         </template>
       </CDataTable>
@@ -67,6 +78,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    categoryList: Array,
   },
   methods: {
     getBadge(status) {
@@ -80,6 +92,9 @@ export default {
         ? 'danger'
         : 'primary';
     },
+    getCategoryName(id) {
+      return this.categoryList.find(x => x.id === id).name;
+    }
   },
 };
 </script>

@@ -8,6 +8,7 @@
           :caption="caption"
           :editAction="onClickEditBtn"
           :deleteAction="onClickDelete"
+          :categoryList="categoryList"
         />
       </CCol>
     </CRow>
@@ -23,11 +24,39 @@
       <template v-slot:body>
         <CCard>
           <CCardBody>
-            <CInput
-              label="Name"
-              placeholder="Category name"
-              v-model="item.name"
+            <CInput label="Name" placeholder="Item name" v-model="item.name" />
+            <CTextarea
+              label="Detail"
+              placeholder="Detail..."
+              rows="2"
+              v-model="item.detail"
             />
+            <CInput label="Price" placeholder="Price" v-model="item.price" />
+            <CSelect
+              label="Category"
+              :options="category"
+              @change="handleCategory($event)"
+              v-model="categoryEvent"
+              :value.sync="categoryEvent"
+              placeholder="Please select"
+            /> 
+            Image<br />
+            <input
+              v-if="!uploadFinished"
+              type="file"
+              id="file"
+              ref="file"
+              @change="handleFileUpload()"
+            />
+
+            <button
+              v-if="!uploadFinished"
+              @click="onClickUpload()"
+              class="btn btn-sm btn-primary"
+            >
+              Upload
+            </button>
+            <img :src="'http://localhost:5000' + item.image" alt="">
           </CCardBody>
         </CCard>
       </template>
@@ -49,7 +78,13 @@
 <script>
 import CTableWrapper from '../base/Table.vue';
 import Modal from '../base/Modal';
-import { ActionGet, ActionPut, ActionPost, ActionDelete } from '../../storage/api';
+import {
+  ActionGet,
+  ActionPut,
+  ActionPost,
+  ActionDelete,
+  ActionUpload,
+} from '../../storage/api';
 
 export default {
   name: 'List',
@@ -59,6 +94,7 @@ export default {
       this.$refs.forms.openModal();
       this.editMode = 'Add';
       this.item = {};
+      this.uploadFinished = false;
     },
     onClickEditBtn(item) {
       this.$refs.forms.openModal();
@@ -68,9 +104,14 @@ export default {
     closeModal() {
       this.$refs.forms.closeModal();
     },
+    async onClickUpload() {
+      this.item.image = await ActionUpload(this.file);
+      this.uploadFinished = true;
+    },
     async fetchList() {
+      this.categoryList = await ActionGet(this.category_table);
+      this.category = this.categoryList.map((x) => x.name);
       this.list = await ActionGet(this.table);
-      console.log(this.list);
     },
     async onClickSubmit() {
       if (this.editMode === 'Add') {
@@ -82,21 +123,33 @@ export default {
       await this.fetchList();
       this.closeModal();
     },
+    handleCategory(e) {
+      this.item.category = this.categoryList.find(x => x.name === e.target.value).id;
+    },
     async onClickDelete(id) {
       this.item = { id };
       await ActionDelete(this.table, this.item);
       await this.fetchList();
       this.closeModal();
     },
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0];
+    },
   },
   data() {
     return {
       caption: 'Items',
       table: 'items',
+      category_table: 'category',
       list: [],
-      fields: ['id', 'image' , 'name', 'category', 'price', 'edit'],
+      fields: ['id', 'image', 'name', 'category', 'price', 'edit'],
       showModal: false,
       item: {},
+      files: null,
+      category: [],
+      categoryList: [],
+      uploadFinished: false,
+      categoryEvent: null
     };
   },
   async mounted() {
