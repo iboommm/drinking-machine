@@ -39,6 +39,20 @@ router.get('/:table', authenticateJWT, (req, res) => {
   });
 });
 
+router.get('/stockWithId/:id', authenticateJWT, (req, res) => {
+  const sql = `select * from stock where machine_id = ${req.params.id}`;
+  const params = [];
+  db.all(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      result,
+    });
+  });
+});
+
 router.get('/:table/:id', authenticateJWT, (req, res) => {
   const sql = `select * from ${req.params.table} where id = ${req.params.id} `;
   const params = [];

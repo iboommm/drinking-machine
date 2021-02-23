@@ -9,11 +9,12 @@ const Login = () => import('@/views/pages/Login');
 const Machine = () => import('@/views/machine/List');
 const Category = () => import('@/views/category/List');
 const Items = () => import('@/views/items/List');
+const Stock = () => import('@/views/stock/List');
 
 Vue.use(Router);
 
 export default new Router({
-  mode: 'hash', // https://router.vuejs.org/api/#mode
+  mode: 'hash',
   linkActiveClass: 'active',
   scrollBehavior: () => ({ y: 0 }),
   routes: configRoutes(),
@@ -72,6 +73,15 @@ function configRoutes() {
           meta: {
             requiresAuth: true,
             title: 'Items',
+          },
+        },
+        {
+          path: 'stock',
+          name: 'Stock',
+          component: Stock,
+          meta: {
+            requiresAuth: true,
+            title: 'Stock',
           },
         },
       ],

@@ -46,6 +46,11 @@
             {{ getCategoryName(item.category) }}
           </td>
         </template>
+         <template #item_id="{ item }">
+          <td>
+            {{ getItemName(item.item_id) }}
+          </td>
+        </template>
       </CDataTable>
     </CCardBody>
   </CCard>
@@ -79,6 +84,7 @@ export default {
       default: true,
     },
     categoryList: Array,
+    itemList: Array,
   },
   methods: {
     getBadge(status) {
@@ -93,7 +99,10 @@ export default {
         : 'primary';
     },
     getCategoryName(id) {
-      return this.categoryList.find(x => x.id === id).name;
+      return this.categoryList.find(x => x.id === id).name || '';
+    },
+    getItemName(id) {
+      return this.itemList.find(x => x.id === id).name || '';
     }
   },
 };
